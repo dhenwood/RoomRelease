@@ -71,8 +71,7 @@ function getPeopleCount(){
     .get('RoomAnalytics PeopleCount')
     .then((count) => {
       currentPeopleCount = count.Current
-      //getPeoplePresence()
-      detectPeople()
+      getPeoplePresence()
     })
 }
 
