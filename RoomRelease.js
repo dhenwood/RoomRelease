@@ -19,19 +19,23 @@ function getBookings(){
   console.log('getBookings...')
   xapi.command('Bookings List')
   .then((response) => {
-    const bookings = response.Booking
-    bookings.forEach(checkMeetingTime);
+    const totalMeetings = response.ResultInfo.TotalRows
+    if (totalMeetings != 0){
+      const bookings = response.Booking
+      bookings.forEach(checkMeetingTime);
+    }
   })
 }
 
-function checkMeetingTime(item, index){
+function checkMeetingTime(item){
   const startTime = item.Time.StartTime
-  meetingId = item.MeetingId
+  console.log('startTime: ' + startTime)
 
   var startEpochTime = convertTimeToEpoch(startTime)
   var currentEpochTime = getCurrentTime()
 
   if (currentEpochTime > startEpochTime){
+    meetingId = item.MeetingId
     console.log('meeting ' + meetingId +' is active')
     getPeopleCount()
   }
@@ -71,7 +75,8 @@ function getPeopleCount(){
     .get('RoomAnalytics PeopleCount')
     .then((count) => {
       currentPeopleCount = count.Current
-      getPeoplePresence()
+      //getPeoplePresence()
+      detectPeople()
     })
 }
 
