@@ -103,8 +103,9 @@ function presentWarning(){
 
 function releaseRoom(){
   countPeopleLoop = 0
-  console.log("releasingRoom!!!")
-  // Code to come...
+  console.log("releasingRoom for meeting: " + meetingId)
+  
+  xapi.command('Bookings Respond', {MeetingId: meetingId, Type: 'Decline'});
 }
 
 
